@@ -151,6 +151,7 @@ pathALCARECOTkAlCosmicsRegional0THLT = cms.Path(seqALCARECOTkAlCosmicsRegional0T
 pathALCARECOMuAlGlobalCosmicsInCollisions = cms.Path(seqALCARECOMuAlGlobalCosmicsInCollisions*ALCARECOMuAlGlobalCosmicsInCollisionsDQM)
 pathALCARECOMuAlGlobalCosmics = cms.Path(seqALCARECOMuAlGlobalCosmics*ALCARECOMuAlGlobalCosmicsDQM)
 pathALCARECOPromptCalibProd = cms.Path(seqALCARECOPromptCalibProd)
+pathALCARECOPromptCalibProdSiPixelAli = cms.Path(seqALCARECOPromptCalibProdSiPixelAli)
 pathALCARECOSiStripPCLHistos = cms.Path(seqALCARECOSiStripPCLHistos)
 
 # AlCaReco event content definitions:
@@ -464,6 +465,15 @@ ALCARECOStreamPromptCalibProd = cms.FilteredStream(
 	paths  = (pathALCARECOPromptCalibProd),
 	content = OutALCARECOPromptCalibProd.outputCommands,
 	selectEvents = OutALCARECOPromptCalibProd.SelectEvents,
+	dataTier = cms.untracked.string('ALCARECO')
+	)
+
+ALCARECOStreamPromptCalibProdSiPixelAli = cms.FilteredStream(
+	responsible = 'Gianluca Cerminara',
+	name = 'PromptCalibProdSiPixelAli',
+	paths  = (pathALCARECOPromptCalibProdSiPixelAli),
+	content = OutALCARECOPromptCalibProdSiPixelAli.outputCommands,
+	selectEvents = OutALCARECOPromptCalibProdSiPixelAli.SelectEvents,
 	dataTier = cms.untracked.string('ALCARECO')
 	)
 
