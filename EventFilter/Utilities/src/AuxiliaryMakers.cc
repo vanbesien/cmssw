@@ -12,12 +12,12 @@ namespace evf{
 					     std::string const &processGUID,
                                              bool verifyLumiSection){
 	edm::EventID eventId(runNumber, // check that runnumber from record is consistent
-			     //record->getHeader().getData().header.lumiSection,//+1
+			     //record->getHeader().getLumiSection(),//+1
                              lumiSection,
-			     record->getHeader().getData().header.eventNumber);
+			     record->getHeader().getEventNumber());
 
-	uint64_t gpsh = record->getBST().getBST().bst.gpstimehigh;
-	uint32_t gpsl = record->getBST().getBST().bst.gpstimelow;
+	uint64_t gpsh = record->getBST().getGpsTimeHigh();
+	uint32_t gpsl = record->getBST().getGpsTimeLow();
         edm::TimeValue_t time = static_cast<edm::TimeValue_t> ((gpsh << 32) + gpsl);
         if (time == 0) {
           timeval stv;
@@ -25,8 +25,8 @@ namespace evf{
           time = stv.tv_sec;
           time = (time << 32) + stv.tv_usec;
         }
-	uint64_t orbitnr = (((uint64_t)record->getHeader().getData().header.orbitHigh) << 16) + record->getHeader().getData().header.orbitLow;
-        uint32_t recordLumiSection = record->getHeader().getData().header.lumiSection;
+	uint64_t orbitnr = (((uint64_t)record->getHeader().getOrbitHigh()) << 16) + record->getHeader().getOrbitLow();
+        uint32_t recordLumiSection = record->getHeader().getLumiSection();
 
         if (verifyLumiSection && recordLumiSection != lumiSection) 
           edm::LogWarning("AuxiliaryMakers") << "Lumisection mismatch, external : "<<lumiSection << ", record : " << recordLumiSection; 
@@ -37,8 +37,8 @@ namespace evf{
 				   processGUID,
 				   edm::Timestamp(time),
 				   true,
-                                   (edm::EventAuxiliary::ExperimentType)(FED_EVTY_EXTRACT(record->getFEDHeader().getData().header.eventid)),
-				   (int)record->getHeader().getData().header.bcid,
+                                   (edm::EventAuxiliary::ExperimentType)(FED_EVTY_EXTRACT(record->getFEDHeader().getEventId())),
+				   (int)record->getHeader().getBcId(),
 				   edm::EventAuxiliary::invalidStoreNumber,
 				   (int)(orbitnr&0x7fffffffU));//framework supports only 32-bit signed
       }

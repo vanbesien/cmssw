@@ -1,3 +1,6 @@
+#ifndef DATAFORMATS_SCALERS_BSTRECORD_H
+#define DATAFORMATS_SCALERS_BSTRECORD_H
+
 /** \class BSTRecord
  *
  * Class representing the Beam Synchronous Timing (BST)
@@ -64,3 +67,4 @@ class BSTRecord {
   unsigned char m_bstMaster;
   unsigned char m_particleBeam1, m_particleBeam2;
 };
+#endif

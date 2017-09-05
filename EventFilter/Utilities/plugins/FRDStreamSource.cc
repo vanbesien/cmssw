@@ -120,12 +120,12 @@ bool FRDStreamSource::setRunAndEventInfo(edm::EventID& id, edm::TimeValue_t& the
     if (fedId == FEDNumbering::MINTCDSuTCAFEDID) {
       foundTCDSFED=true;
       evf::evtn::TCDSRecord record((unsigned char *)(event + eventSize ));
-      id = edm::EventID(frdEventMsg->run(),record.getHeader().getData().header.lumiSection,
-			record.getHeader().getData().header.eventNumber);
+      id = edm::EventID(frdEventMsg->run(),record.getHeader().getLumiSection(),
+			record.getHeader().getEventNumber());
       eType = ((edm::EventAuxiliary::ExperimentType)FED_EVTY_EXTRACT(fedHeader->eventid));
       //evf::evtn::evm_board_setformat(fedSize);
-      uint64_t gpsh = record.getBST().getBST().bst.gpstimehigh;
-      uint32_t gpsl = record.getBST().getBST().bst.gpstimelow;
+      uint64_t gpsh = record.getBST().getGpsTimeHigh();
+      uint32_t gpsl = record.getBST().getGpsTimeLow();
       theTime = static_cast<edm::TimeValue_t>((gpsh << 32) + gpsl);
     }
 

@@ -82,7 +82,7 @@ HLTL1NumberFilter::filter(edm::StreamID, edm::Event& iEvent, const edm::EventSet
       unsigned long counter;
       if (useTCDS_) {
         evf::evtn::TCDSRecord record(data.data());
-        counter = record.getHeader().getData().header.triggerCount;
+        counter = record.getHeader().getTriggerCount();
       } else {
         FEDHeader header(data.data());
         counter = header.lvl1ID();
