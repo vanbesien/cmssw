@@ -7,15 +7,15 @@ process.MessageLogger = cms.Service( "MessageLogger",
                                      cout = cms.untracked.PSet(threshold = cms.untracked.string('INFO'))
                                      )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32( 10 ),
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32( 1 ),
                                         output = cms.untracked.int32( 10 )
                                         )
 
 process.options = cms.untracked.PSet( SkipEvent = cms.untracked.vstring( 'ProductNotFound' ) )
 
 process.source = cms.Source( "PoolSource",
-                             #fileNames = cms.untracked.vstring( "/store/data/Run2016B/SingleMuon/RAW/v2/000/274/146/00000/040AA6B5-5C24-E611-BF6D-02163E013712.root" )
-                             fileNames = cms.untracked.vstring( "/store/data/Run2016B/SingleMuon/RAW/v2/000/274/161/00000/00098E23-3825-E611-A603-02163E0134BD.root" )
+                             ##fileNames = cms.untracked.vstring( "/store/data/Run2016B/SingleMuon/RAW/v2/000/274/161/00000/00098E23-3825-E611-A603-02163E0134BD.root" )
+                             fileNames = cms.untracked.vstring( "file:CE81D8ED-2A85-E711-93AD-02163E01A4AD.root" )
                              )
 
 process.a = cms.EDAnalyzer( "GlobalNumbersAnalysis",
