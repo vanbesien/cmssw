@@ -111,6 +111,15 @@ void TcdsRawToDigi::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
             unsigned char particleType1 = static_cast<unsigned char>(tcdsRecord.getBST().getParticleTypes() & 0xFF);
             unsigned char particleType2 = static_cast<unsigned char>(tcdsRecord.getBST().getParticleTypes() >> 8);
             unsigned short beamMomentum = static_cast<unsigned short>(tcdsRecord.getBST().getBeamMomentum());
+            // Sometimes it comes in with all bits 1: (2**16 - 1 = 65535)
+            if (beamMomentum == 65535) {
+              beamMomentum = 0;
+            // Momentum used to come in just correctly, but since 2017-03-29
+            // the machine is sending those bits with a correction factor of
+            // 1GeV/120MeV = 8.33333
+            } else if (iEvent.run() >= 290413) {
+              beamMomentum = beamMomentum * 120 / 1000;
+            }
             unsigned int intensityBeam1 = static_cast<unsigned int>(tcdsRecord.getBST().getIntensityBeam1());
             unsigned int intensityBeam2 = static_cast<unsigned int>(tcdsRecord.getBST().getIntensityBeam2());
             bstRecord.set(gpstime, bstMaster, turnCount, lhcFill, beamMode, particleType1, particleType2, beamMomentum, intensityBeam1, intensityBeam2);
